@@ -2,6 +2,7 @@
 from dash import Dash, html, dcc
 import plotly.express as px
 import pandas as pd
+import numpy as np
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 
@@ -22,6 +23,9 @@ external_stylesheets = [
     },
 ]
 
+# Image
+userIcon = "Assets/User/person.png"
+
 # Dash App Information
 app = Dash(
     __name__,
@@ -30,14 +34,18 @@ app = Dash(
 )
 
 # Dash Datasets
+studentData = pd.read_csv("studentData.csv")
+studentData.index = np.arange(1, len(studentData) + 1)
 
+print(studentData)
 # Dash Students
-currentStudent = "Student #1"
+currentStudent = studentData.loc[1]
 
 
 # Dash Design
 app.layout = html.Div(
     children=[
+        # Navigation Bar
         html.Nav(
             className="navbar bg-body-tertiary p-3",
             style={"background-color": "#4066a3"},
@@ -45,6 +53,7 @@ app.layout = html.Div(
                 html.Div(
                     className="container-fluid",
                     children=[
+                        # Title Text with Logo <- Left Side
                         html.Span(
                             className="navbar-brand mb-0 h1 text-white",
                             style={
@@ -53,37 +62,64 @@ app.layout = html.Div(
                             },
                             children=["KLD"],
                         ),
+                        # Account Details <- Right Side
                         html.Div(
                             className="d-flex align-items-center text-white",
                             style={
                                 "font-family": "Roboto",
                                 "font-weight": "500",
                             },
+                            # Student #
                             children=[
-                                html.Span(className="px-3", children=[currentStudent]),
+                                html.Span(
+                                    className="px-3",
+                                    id="currentStudent",
+                                    children=[
+                                        html.Img(src=userIcon),
+                                        "Student #"
+                                        + str(currentStudent["studentNumber"]),
+                                    ],
+                                ),
                                 dbc.Button(
                                     "Change Student",
                                     id="open",
                                     n_clicks=0,
-                                    className="px-2 bg-transparent border-white",
+                                    outline=True,
+                                    active=True,
+                                    className="px-2 bg-transparent border-white text-white",
                                     style={
                                         "font-family": "Roboto",
                                         "font-weight": "300",
                                     },
                                 ),
+                                # Change Student Form
                                 dbc.Modal(
                                     [
-                                        dbc.ModalHeader(dbc.ModalTitle("Header")),
+                                        dbc.ModalHeader(
+                                            dbc.ModalTitle("Change Student")
+                                        ),
                                         dbc.ModalBody(
-                                            "This is the content of the modal"
+                                            children=[
+                                                html.Div(
+                                                    children=[
+                                                        dbc.Label("Student ID"),
+                                                        dbc.Input(
+                                                            type="text",
+                                                            id="inputStudentID",
+                                                        ),
+                                                    ]
+                                                ),
+                                            ]
                                         ),
                                         dbc.ModalFooter(
-                                            dbc.Button(
-                                                "Close",
-                                                id="close",
-                                                className="ms-auto",
-                                                n_clicks=0,
-                                            )
+                                            children=[
+                                                dbc.Button(
+                                                    "Change",
+                                                    id="changeStudentID",
+                                                    className="ms-auto",
+                                                    n_clicks=0,
+                                                ),
+                                            ]
                                         ),
                                     ],
                                     id="modal",
@@ -101,7 +137,7 @@ app.layout = html.Div(
 
 @app.callback(
     Output("modal", "is_open"),
-    [Input("open", "n_clicks"), Input("close", "n_clicks")],
+    [Input("open", "n_clicks"), Input("changeStudentID", "n_clicks")],
     [State("modal", "is_open")],
 )
 def toggle_modal(n1, n2, is_open):
