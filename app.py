@@ -1,9 +1,11 @@
 # Imports
 from dash import Dash, html, dcc
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 import dash_bootstrap_components as dbc
+import matplotlib.pyplot as plt
 from dash.dependencies import Input, Output, State
 
 
@@ -23,23 +25,24 @@ external_stylesheets = [
     },
 ]
 
-# Image
-userIcon = "Assets/User/person.png"
+# Designs
+mainColor = "#5b8dde"
 
-# Dash App Information
+# App Information
 app = Dash(
     __name__,
     external_stylesheets=external_stylesheets,
     title="Kinaadman Learning Dashboard",
 )
 
-# Dash Datasets
+# Datasets
 studentData = pd.read_csv("studentData.csv")
-studentData.index = np.arange(1, len(studentData) + 1)
+# studentData.index = np.arange(1, len(studentData) + 1)
 
+
+# Visualization
 print(studentData)
-# Dash Students
-currentStudent = studentData.loc[1]
+# fig = px.bar(currentStudent, x=grades.values, y=list(grades.columns), orientation="h")
 
 
 # Dash Design
@@ -47,8 +50,8 @@ app.layout = html.Div(
     children=[
         # Navigation Bar
         html.Nav(
-            className="navbar bg-body-tertiary p-3",
-            style={"background-color": "#4066a3"},
+            className="navbar bg-body-tertiary rounded-bottom p-4",
+            style={"background-color": mainColor},
             children=[
                 html.Div(
                     className="container-fluid",
@@ -59,8 +62,9 @@ app.layout = html.Div(
                             style={
                                 "font-family": "Roboto",
                                 "font-weight": "500",
+                                "font-size": "1.5rem",
                             },
-                            children=["KLD"],
+                            children=["Kinaadman Learning Dashboard"],
                         ),
                         # Account Details <- Right Side
                         html.Div(
@@ -68,17 +72,36 @@ app.layout = html.Div(
                             style={
                                 "font-family": "Roboto",
                                 "font-weight": "500",
+                                "font-size": "1em",
                             },
                             # Student #
                             children=[
                                 html.Span(
-                                    className="px-3",
-                                    id="currentStudent",
+                                    className="px-3 d-flex align-items-center",
                                     children=[
-                                        html.Img(src=userIcon),
-                                        "Student #"
-                                        + str(currentStudent["studentNumber"]),
+                                        html.Img(
+                                            className="px-3",
+                                            src="assets/user.svg",
+                                            style={
+                                                "height": "2.5em",
+                                                "filter": "brightness(0) invert(1)",
+                                            },
+                                        ),
+                                        html.Span(
+                                            id="currentStudent",
+                                            children=[
+                                                "Student #"
+                                                + str(
+                                                    currentStudent[
+                                                        "studentNumber"
+                                                    ].values[0]
+                                                )
+                                            ],
+                                        ),
                                     ],
+                                    style={
+                                        "font-size": "1em",
+                                    },
                                 ),
                                 dbc.Button(
                                     "Change Student",
@@ -90,6 +113,7 @@ app.layout = html.Div(
                                     style={
                                         "font-family": "Roboto",
                                         "font-weight": "300",
+                                        "font-size": "1rem",
                                     },
                                 ),
                                 # Change Student Form
@@ -100,13 +124,13 @@ app.layout = html.Div(
                                         ),
                                         dbc.ModalBody(
                                             children=[
-                                                html.Div(
-                                                    children=[
-                                                        dbc.Label("Student ID"),
+                                                dbc.FormFloating(
+                                                    [
                                                         dbc.Input(
                                                             type="text",
                                                             id="inputStudentID",
                                                         ),
+                                                        dbc.Label("Student ID"),
                                                     ]
                                                 ),
                                             ]
@@ -131,6 +155,10 @@ app.layout = html.Div(
                 )
             ],
         ),
+        # Dashboard Content
+        html.Div(
+            children=[html.Div("Student Performance Analysis"), dcc.Graph(figure=fig)]
+        ),
     ],
 )
 
@@ -144,6 +172,19 @@ def toggle_modal(n1, n2, is_open):
     if n1 or n2:
         return not is_open
     return is_open
+
+
+@app.callback(
+    Output("currentStudent", "children"),
+    [Input("changeStudentID", "n_clicks"), Input("inputStudentID", "value")],
+)
+def output_text(n_clicks, value):
+    global currentStudent
+    if n_clicks:
+        n_clicks = 0
+        currentStudent = studentData[studentData["studentNumber"] == int(value)]
+        print(currentStudent["subject_1"])
+        return "Student #" + str(currentStudent["studentNumber"].values[0])
 
 
 if __name__ == "__main__":

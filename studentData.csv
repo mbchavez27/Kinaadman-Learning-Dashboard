@@ -1,10 +1,6 @@
-studentNumber,subject_1
-1,1
-2,2
-3,3
-4,4
-5,5
-6,6
-7,7
-8,8
-9,9
+,Subjects,Final Grade
+0,Chemistry,74
+1,Pre-Calculus,15
+2,Physics 2,31
+3,Basic Calculus,91
+4,Biology 2,99
