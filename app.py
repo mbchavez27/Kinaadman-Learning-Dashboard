@@ -37,12 +37,18 @@ app = Dash(
 
 # Datasets
 studentData = pd.read_csv("studentData.csv")
-# studentData.index = np.arange(1, len(studentData) + 1)
+studentData.index = np.arange(1, len(studentData) + 1)
 
 
 # Visualization
 print(studentData)
-# fig = px.bar(currentStudent, x=grades.values, y=list(grades.columns), orientation="h")
+studentPerformanceGraph = px.bar(
+    studentData,
+    x="Performance",
+    y="Subjects",
+    orientation="h",
+    title="Student Performance Analysis",
+)
 
 
 # Dash Design
@@ -89,14 +95,7 @@ app.layout = html.Div(
                                         ),
                                         html.Span(
                                             id="currentStudent",
-                                            children=[
-                                                "Student #"
-                                                + str(
-                                                    currentStudent[
-                                                        "studentNumber"
-                                                    ].values[0]
-                                                )
-                                            ],
+                                            children=["Student #" + "1"],
                                         ),
                                     ],
                                     style={
@@ -157,7 +156,9 @@ app.layout = html.Div(
         ),
         # Dashboard Content
         html.Div(
-            children=[html.Div("Student Performance Analysis"), dcc.Graph(figure=fig)]
+            children=[
+                dcc.Graph(figure=studentPerformanceGraph),
+            ]
         ),
     ],
 )
@@ -179,12 +180,11 @@ def toggle_modal(n1, n2, is_open):
     [Input("changeStudentID", "n_clicks"), Input("inputStudentID", "value")],
 )
 def output_text(n_clicks, value):
-    global currentStudent
     if n_clicks:
-        n_clicks = 0
-        currentStudent = studentData[studentData["studentNumber"] == int(value)]
-        print(currentStudent["subject_1"])
-        return "Student #" + str(currentStudent["studentNumber"].values[0])
+        # currentStudent = studentData[studentData["studentNumber"] == int(value)]
+        # print(currentStudent["subject_1"])
+        return "Student #" + value
+    return
 
 
 if __name__ == "__main__":
