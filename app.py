@@ -156,9 +156,11 @@ app.layout = html.Div(
         ),
         # Dashboard Content
         html.Div(
+            className="d-flex",
             children=[
-                dcc.Graph(figure=studentPerformanceGraph),
-            ]
+                html.Div(children=[dcc.Graph(figure=studentPerformanceGraph)]),
+                html.Div(children="TITE"),
+            ],
         ),
     ],
 )
