@@ -43,11 +43,7 @@ studentData.index = np.arange(1, len(studentData) + 1)
 # Visualization
 print(studentData)
 studentPerformanceGraph = px.bar(
-    studentData,
-    x="Performance",
-    y="Subjects",
-    orientation="h",
-    title="Student Performance Analysis",
+    studentData, x="Performance", y="Subjects", orientation="h"
 )
 
 
@@ -156,17 +152,49 @@ app.layout = html.Div(
         ),
         # Dashboard Content
         html.Div(
-            className="container",
+            className="container p-2",
             children=[
                 html.Div(
                     className="d-flex",
                     children=[
                         html.Div(
-                            className="justify-content-center p-5",
-                            children=[dcc.Graph(figure=studentPerformanceGraph)],
+                            className="align-items-center justify-content-center p-3",
+                            children=[
+                                html.Div(
+                                    className="text-white p-2 text-center rounded",
+                                    children="Student Performance Analysis",
+                                    style={
+                                        "background-color": mainColor,
+                                        "font-family": "Roboto",
+                                        "font-weight": "500",
+                                        "font-size": "1.2rem",
+                                    },
+                                ),
+                                dcc.Graph(
+                                    figure=studentPerformanceGraph,
+                                    style={"width": "40rem"},
+                                ),
+                            ],
                         ),
                         html.Div(
-                            className="justify-content-center", children="TITE ni qen"
+                            className="d-flex",
+                            children=[
+                                html.Div(
+                                    className="align-items-center justify-content-center p-3",
+                                    children=[
+                                        html.H1(
+                                            className=" text-white p-2 text-center rounded",
+                                            children="Subject: Pre Calculus",
+                                            style={
+                                                "background-color": mainColor,
+                                                "font-family": "Roboto",
+                                                "font-weight": "500",
+                                                "font-size": "1.2rem",
+                                            },
+                                        )
+                                    ],
+                                )
+                            ],
                         ),
                     ],
                 ),
