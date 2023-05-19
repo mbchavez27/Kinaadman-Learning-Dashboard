@@ -152,51 +152,51 @@ app.layout = html.Div(
         ),
         # Dashboard Content
         html.Div(
-            className="container p-2",
+            className="d-flex p-1 align-items-center justify-content-center",
             children=[
                 html.Div(
-                    className="d-flex",
+                    className="m-5",
                     children=[
                         html.Div(
-                            className="align-items-center justify-content-center p-3",
-                            children=[
-                                html.Div(
-                                    className="text-white p-2 text-center rounded",
-                                    children="Student Performance Analysis",
-                                    style={
-                                        "background-color": mainColor,
-                                        "font-family": "Roboto",
-                                        "font-weight": "500",
-                                        "font-size": "1.2rem",
-                                    },
-                                ),
-                                dcc.Graph(
-                                    figure=studentPerformanceGraph,
-                                    style={
-                                        "width": "40rem",
-                                    },
-                                ),
-                            ],
+                            className="text-white p-2 text-center rounded",
+                            children="Student Performance",
+                            style={
+                                "background-color": mainColor,
+                                "font-family": "Roboto",
+                                "font-weight": "500",
+                                "font-size": "1.2rem",
+                            },
+                        ),
+                        dcc.Graph(
+                            figure=studentPerformanceGraph,
+                            style={
+                                "width": "45rem",
+                            },
+                        ),
+                    ],
+                ),
+                html.Div(
+                    className="m-5 d-flex justify-content-center flex-column",
+                    children=[
+                        html.Div(
+                            className="text-white p-2 text-center rounded mr-auto",
+                            children="Analysis",
+                            style={
+                                "background-color": mainColor,
+                                "font-family": "Roboto",
+                                "font-weight": "500",
+                                "font-size": "1.2rem",
+                            },
                         ),
                         html.Div(
-                            className="d-flex",
-                            children=[
-                                html.Div(
-                                    className="align-items-center justify-content-center p-3",
-                                    children=[
-                                        html.H1(
-                                            className=" text-white p-2 text-center rounded",
-                                            children="Subject: Pre Calculus",
-                                            style={
-                                                "background-color": mainColor,
-                                                "font-family": "Roboto",
-                                                "font-weight": "500",
-                                                "font-size": "1.2rem",
-                                            },
-                                        )
-                                    ],
-                                )
-                            ],
+                            className="text-white p-3 text-center rounded",
+                            children="Analysis",
+                            style={
+                                "background-color": mainColor,
+                                "font-family": "Roboto",
+                                "font-weight": "500",
+                                "font-size": "1.2rem",
+                            },
                         ),
                     ],
                 ),
