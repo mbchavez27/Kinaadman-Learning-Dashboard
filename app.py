@@ -172,7 +172,9 @@ app.layout = html.Div(
                                 ),
                                 dcc.Graph(
                                     figure=studentPerformanceGraph,
-                                    style={"width": "40rem"},
+                                    style={
+                                        "width": "40rem",
+                                    },
                                 ),
                             ],
                         ),
