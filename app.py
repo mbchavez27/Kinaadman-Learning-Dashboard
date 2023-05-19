@@ -43,7 +43,13 @@ studentData.index = np.arange(1, len(studentData) + 1)
 # Visualization
 print(studentData)
 studentPerformanceGraph = px.bar(
-    studentData, x="Performance", y="Subjects", orientation="h"
+    studentData,
+    x="Performance",
+    y="Subjects",
+    orientation="h",
+)
+studentPerformanceGraph.update_layout(
+    margin=dict(l=20, r=20, t=5, b=20),
 )
 
 
@@ -151,52 +157,72 @@ app.layout = html.Div(
             ],
         ),
         # Dashboard Content
+        # Grid
         html.Div(
-            className="d-flex p-1 align-items-center justify-content-center",
+            className="container",
             children=[
+                # Headers
                 html.Div(
-                    className="m-5",
+                    className="row mt-5 justify-content-md-center",
                     children=[
                         html.Div(
-                            className="text-white p-2 text-center rounded",
-                            children="Student Performance",
-                            style={
-                                "background-color": mainColor,
-                                "font-family": "Roboto",
-                                "font-weight": "500",
-                                "font-size": "1.2rem",
-                            },
+                            className="col mx-5",
+                            children=[
+                                html.Div(
+                                    className="text-white p-2 text-center rounded mr-auto",
+                                    children=[html.H1("Student's Performance")],
+                                    style={
+                                        "background-color": mainColor,
+                                        "font-family": "Roboto",
+                                        "font-weight": "500",
+                                        "font-size": "1.2rem",
+                                    },
+                                ),
+                            ],
                         ),
-                        dcc.Graph(
-                            figure=studentPerformanceGraph,
-                            style={
-                                "width": "45rem",
-                            },
+                        html.Div(
+                            className="col mx-5",
+                            children=[
+                                html.Div(
+                                    className="text-white p-2 text-center rounded mr-auto",
+                                    children=[html.H1("Analysis")],
+                                    style={
+                                        "background-color": mainColor,
+                                        "font-family": "Roboto",
+                                        "font-weight": "500",
+                                        "font-size": "1.2rem",
+                                    },
+                                ),
+                            ],
                         ),
                     ],
                 ),
+                # Content
                 html.Div(
-                    className="m-5 d-flex justify-content-center flex-column",
+                    className="row  mt-3 justify-content-md-center",
                     children=[
                         html.Div(
-                            className="text-white p-2 text-center rounded mr-auto",
-                            children="Analysis",
-                            style={
-                                "background-color": mainColor,
-                                "font-family": "Roboto",
-                                "font-weight": "500",
-                                "font-size": "1.2rem",
-                            },
+                            className="col mx-5",
+                            children=[
+                                dcc.Graph(
+                                    figure=studentPerformanceGraph,
+                                ),
+                            ],
                         ),
                         html.Div(
-                            className="text-white p-3 text-center rounded",
-                            children="Analysis",
-                            style={
-                                "background-color": mainColor,
-                                "font-family": "Roboto",
-                                "font-weight": "500",
-                                "font-size": "1.2rem",
-                            },
+                            className="col mx-5",
+                            children=[
+                                html.Div(
+                                    className="text-white p-2 text-center rounded mr-auto",
+                                    children=[html.H2("Best Subjects")],
+                                    style={
+                                        "background-color": mainColor,
+                                        "font-family": "Roboto",
+                                        "font-weight": "500",
+                                        "font-size": "1.2rem",
+                                    },
+                                ),
+                            ],
                         ),
                     ],
                 ),
