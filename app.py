@@ -38,10 +38,9 @@ app = Dash(
 # Datasets
 studentData = pd.read_csv("studentData.csv")
 studentData.index = np.arange(1, len(studentData) + 1)
-
+print(studentData.loc[studentData.max()])
 
 # Visualization
-print(studentData)
 studentPerformanceGraph = px.bar(
     studentData,
     x="Performance",
@@ -170,7 +169,7 @@ app.layout = html.Div(
                             children=[
                                 html.Div(
                                     className="text-white p-2 text-center rounded mr-auto",
-                                    children=[html.H1("Student's Performance")],
+                                    children=[html.H3("Student's Performance")],
                                     style={
                                         "background-color": mainColor,
                                         "font-family": "Roboto",
@@ -185,7 +184,7 @@ app.layout = html.Div(
                             children=[
                                 html.Div(
                                     className="text-white p-2 text-center rounded mr-auto",
-                                    children=[html.H1("Analysis")],
+                                    children=[html.H3("Analysis")],
                                     style={
                                         "background-color": mainColor,
                                         "font-family": "Roboto",
@@ -213,14 +212,43 @@ app.layout = html.Div(
                             className="col mx-5",
                             children=[
                                 html.Div(
-                                    className="text-white p-2 text-center rounded mr-auto",
-                                    children=[html.H2("Best Subjects")],
-                                    style={
-                                        "background-color": mainColor,
-                                        "font-family": "Roboto",
-                                        "font-weight": "500",
-                                        "font-size": "1.2rem",
-                                    },
+                                    className="text-white p-2 rounded mr-auto",
+                                    children=[
+                                        html.Div(
+                                            className="p-3 mt-1 rounded",
+                                            children=[
+                                                html.H5("Best Subject:"),
+                                                html.P(
+                                                    children=[bestSubj["Subjects"]],
+                                                    style={"font-weight": "300"},
+                                                ),
+                                            ],
+                                            style={
+                                                "background-color": mainColor,
+                                                "font-family": "Roboto",
+                                                "font-weight": "500",
+                                                "font-size": "1.2rem",
+                                            },
+                                        ),
+                                        html.Div(
+                                            className="p-3 mt-3 rounded",
+                                            children=[
+                                                html.H5("Worst Subject:"),
+                                                html.P(
+                                                    children=[
+                                                        studentData.min()["Subjects"]
+                                                    ],
+                                                    style={"font-weight": "300"},
+                                                ),
+                                            ],
+                                            style={
+                                                "background-color": mainColor,
+                                                "font-family": "Roboto",
+                                                "font-weight": "500",
+                                                "font-size": "1.2rem",
+                                            },
+                                        ),
+                                    ],
                                 ),
                             ],
                         ),
