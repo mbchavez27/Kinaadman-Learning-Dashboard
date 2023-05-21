@@ -1,10 +1,12 @@
 # Imports
+from dash_iconify import DashIconify
 from dash import Dash, html, dcc
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 import dash_bootstrap_components as dbc
+import dash_mantine_components as dmc
 import matplotlib.pyplot as plt
 from dash.dependencies import Input, Output, State
 
@@ -38,7 +40,6 @@ app = Dash(
 # Datasets
 studentData = pd.read_csv("studentData.csv")
 studentData = studentData.set_index("Subjects")
-print(studentData)
 
 
 # Visualization
@@ -53,6 +54,7 @@ studentPerformanceGraph = px.bar(
     orientation="h",
 )
 studentPerformanceGraph.update_layout(
+    legend_bgcolor=mainColor,
     margin=dict(l=20, r=20, t=3, b=20),
 )
 subjectPerformance = {
@@ -105,60 +107,44 @@ app.layout = html.Div(
                                                 "filter": "brightness(0) invert(1)",
                                             },
                                         ),
-                                        html.Span(
-                                            id="currentStudent",
-                                            children=["Student #" + "1"],
+                                        dmc.Menu(
+                                            [
+                                                dmc.MenuTarget(
+                                                    dmc.Button(
+                                                        "Student #1",
+                                                        style={
+                                                            "background-color": "rgba(0, 0, 0, 0)",
+                                                            "border": "2px solid white",
+                                                            "font-family": "Roboto",
+                                                            "font-weight": "500",
+                                                            "font-size": "1em",
+                                                        },
+                                                    ),
+                                                ),
+                                                dmc.MenuDropdown(
+                                                    [
+                                                        dmc.MenuLabel("Account"),
+                                                        dmc.MenuItem(
+                                                            "Log-Out",
+                                                            href="https://www.github.com/snehilvj",
+                                                            icon=DashIconify(
+                                                                icon="tabler:settings"
+                                                            ),
+                                                            style={
+                                                                "font-family": "Roboto",
+                                                                "font-weight": "300",
+                                                                "font-size": "1em",
+                                                            },
+                                                        ),
+                                                    ]
+                                                ),
+                                            ],
+                                            trigger="hover",
                                         ),
                                     ],
                                     style={
                                         "font-size": "1em",
                                     },
-                                ),
-                                dbc.Button(
-                                    "Change Student",
-                                    id="open",
-                                    n_clicks=0,
-                                    outline=True,
-                                    active=True,
-                                    className="px-2 bg-transparent border-white text-white",
-                                    style={
-                                        "font-family": "Roboto",
-                                        "font-weight": "300",
-                                        "font-size": "1rem",
-                                    },
-                                ),
-                                # Change Student Form
-                                dbc.Modal(
-                                    [
-                                        dbc.ModalHeader(
-                                            dbc.ModalTitle("Change Student")
-                                        ),
-                                        dbc.ModalBody(
-                                            children=[
-                                                dbc.FormFloating(
-                                                    [
-                                                        dbc.Input(
-                                                            type="text",
-                                                            id="inputStudentID",
-                                                        ),
-                                                        dbc.Label("Student ID"),
-                                                    ]
-                                                ),
-                                            ]
-                                        ),
-                                        dbc.ModalFooter(
-                                            children=[
-                                                dbc.Button(
-                                                    "Change",
-                                                    id="changeStudentID",
-                                                    className="ms-auto",
-                                                    n_clicks=0,
-                                                ),
-                                            ]
-                                        ),
-                                    ],
-                                    id="modal",
-                                    is_open=False,
                                 ),
                             ],
                         ),
@@ -180,12 +166,12 @@ app.layout = html.Div(
                             children=[
                                 html.Div(
                                     className="text-white p-2 text-center rounded mr-auto",
-                                    children=[html.H3("Student's Performance")],
+                                    children=["Student's Performance"],
                                     style={
                                         "background-color": mainColor,
                                         "font-family": "Roboto",
                                         "font-weight": "500",
-                                        "font-size": "1.2rem",
+                                        "font-size": "2em",
                                     },
                                 ),
                             ],
@@ -195,12 +181,12 @@ app.layout = html.Div(
                             children=[
                                 html.Div(
                                     className="text-white p-2 text-center rounded mr-auto",
-                                    children=[html.H3("Analysis")],
+                                    children=["Analysis"],
                                     style={
                                         "background-color": mainColor,
                                         "font-family": "Roboto",
                                         "font-weight": "500",
-                                        "font-size": "1.2rem",
+                                        "font-size": "2em",
                                     },
                                 ),
                             ],
@@ -222,16 +208,20 @@ app.layout = html.Div(
                         html.Div(
                             className="col-md-6 ms-md-auto",
                             children=[
-                                dbc.Accordion(
-                                    [
-                                        dbc.AccordionItem(
+                                dmc.Accordion(
+                                    className="text-white",
+                                    children=[
+                                        dmc.AccordionItem(
                                             [
-                                                html.P(
+                                                dmc.AccordionControl(
+                                                    "Best Performing Subject"
+                                                ),
+                                                dmc.AccordionPanel(
                                                     "Subject: "
                                                     + subjectPerformance["bestSubject"]
                                                 ),
-                                                html.P(
-                                                    "Grade: "
+                                                dmc.AccordionPanel(
+                                                    "Subject: "
                                                     + str(
                                                         subjectPerformance[
                                                             "bestSubjectGrade"
@@ -239,16 +229,19 @@ app.layout = html.Div(
                                                     )
                                                 ),
                                             ],
-                                            title="Best Performing Subject",
+                                            value="bestPerformingSubject",
                                         ),
-                                        dbc.AccordionItem(
+                                        dmc.AccordionItem(
                                             [
-                                                html.P(
+                                                dmc.AccordionControl(
+                                                    "Worst Performing Subject"
+                                                ),
+                                                dmc.AccordionPanel(
                                                     "Subject: "
                                                     + subjectPerformance["worstSubject"]
                                                 ),
-                                                html.P(
-                                                    "Grade: "
+                                                dmc.AccordionPanel(
+                                                    "Subject: "
                                                     + str(
                                                         subjectPerformance[
                                                             "worstSubjectGrade"
@@ -256,15 +249,54 @@ app.layout = html.Div(
                                                     )
                                                 ),
                                             ],
-                                            title="Worst Performing Subject",
+                                            value="worstPerformingSubject",
                                         ),
-                                        dbc.AccordionItem(
-                                            "tite",
-                                            title="Recommendation",
+                                        dmc.AccordionItem(
+                                            [
+                                                dmc.AccordionControl("Reccomendation"),
+                                                dmc.AccordionPanel("Reccomended"),
+                                            ],
+                                            value="recommendation",
                                         ),
                                     ],
-                                    style={
-                                        "font-family": "Roboto",
+                                    styles={
+                                        "root": {
+                                            "backgroundColor": dmc.theme.DEFAULT_COLORS[
+                                                "gray"
+                                            ][0],
+                                            "borderRadius": 5,
+                                        },
+                                        "control": {
+                                            "font-family": "Roboto",
+                                            "font-weight": "500",
+                                        },
+                                        "item": {
+                                            "backgroundColor": dmc.theme.DEFAULT_COLORS[
+                                                "gray"
+                                            ][0],
+                                            "border": "1px solid transparent",
+                                            "font-family": "Roboto",
+                                            "font-weight": "300",
+                                            "font-size": "1em",
+                                            "position": "relative",
+                                            "zIndex": 0,
+                                            "transition": "transform 150ms ease",
+                                            "&[data-active]": {
+                                                "transform": "scale(1.03)",
+                                                "backgroundColor": "white",
+                                                "boxShadow": 5,
+                                                "borderColor": dmc.theme.DEFAULT_COLORS[
+                                                    "gray"
+                                                ][2],
+                                                "borderRadius": 5,
+                                                "zIndex": 1,
+                                            },
+                                        },
+                                        "chevron": {
+                                            "&[data-rotate]": {
+                                                "transform": "rotate(-90deg)",
+                                            },
+                                        },
                                     },
                                 )
                             ],
@@ -278,30 +310,6 @@ app.layout = html.Div(
         ),
     ],
 )
-
-
-@app.callback(
-    Output("modal", "is_open"),
-    [Input("open", "n_clicks"), Input("changeStudentID", "n_clicks")],
-    [State("modal", "is_open")],
-)
-def toggle_modal(n1, n2, is_open):
-    if n1 or n2:
-        return not is_open
-    return is_open
-
-
-@app.callback(
-    Output("currentStudent", "children"),
-    [Input("changeStudentID", "n_clicks"), Input("inputStudentID", "value")],
-)
-def output_text(n_clicks, value):
-    if n_clicks:
-        # currentStudent = studentData[studentData["studentNumber"] == int(value)]
-        # print(currentStudent["subject_1"])
-        return "Student #" + value
-    return
-
 
 if __name__ == "__main__":
     app.run_server(debug=True)
