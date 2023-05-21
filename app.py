@@ -37,18 +37,30 @@ app = Dash(
 
 # Datasets
 studentData = pd.read_csv("studentData.csv")
-studentData.index = np.arange(1, len(studentData) + 1)
+studentData = studentData.set_index("Subjects")
+print(studentData)
+
 
 # Visualization
 studentPerformanceGraph = px.bar(
     studentData,
     x="Performance",
-    y="Subjects",
+    y=studentData.index,
+    labels={
+        "Performance": "Subject Performance",
+        "index": "Subjects",
+    },
     orientation="h",
 )
 studentPerformanceGraph.update_layout(
-    margin=dict(l=20, r=20, t=20, b=20),
+    margin=dict(l=20, r=20, t=3, b=20),
 )
+subjectPerformance = {
+    "bestSubject": studentData["Performance"].idxmax(),
+    "bestSubjectGrade": studentData["Performance"].max(),
+    "worstSubject": studentData["Performance"].idxmin(),
+    "worstSubjectGrade": studentData["Performance"].min(),
+}
 
 
 # Dash Design
@@ -210,45 +222,51 @@ app.layout = html.Div(
                         html.Div(
                             className="col-md-6 ms-md-auto",
                             children=[
-                                html.Div(
-                                    className="text-white p-2 rounded mr-auto",
-                                    children=[
-                                        html.Div(
-                                            className="p-3 mt-1 rounded",
-                                            children=[
-                                                html.H5("Best Subject:"),
+                                dbc.Accordion(
+                                    [
+                                        dbc.AccordionItem(
+                                            [
                                                 html.P(
-                                                    studentData.max()["Subjects"],
-                                                    style={"font-weight": "300"},
+                                                    "Subject: "
+                                                    + subjectPerformance["bestSubject"]
+                                                ),
+                                                html.P(
+                                                    "Grade: "
+                                                    + str(
+                                                        subjectPerformance[
+                                                            "bestSubjectGrade"
+                                                        ]
+                                                    )
                                                 ),
                                             ],
-                                            style={
-                                                "background-color": mainColor,
-                                                "font-family": "Roboto",
-                                                "font-weight": "500",
-                                                "font-size": "1.2rem",
-                                            },
+                                            title="Best Performing Subject",
                                         ),
-                                        html.Div(
-                                            className="p-3 mt-3 rounded",
-                                            children=[
-                                                html.H5("Worst Subject:"),
+                                        dbc.AccordionItem(
+                                            [
                                                 html.P(
-                                                    children=[
-                                                        studentData.min()["Subjects"]
-                                                    ],
-                                                    style={"font-weight": "300"},
+                                                    "Subject: "
+                                                    + subjectPerformance["worstSubject"]
+                                                ),
+                                                html.P(
+                                                    "Grade: "
+                                                    + str(
+                                                        subjectPerformance[
+                                                            "worstSubjectGrade"
+                                                        ]
+                                                    )
                                                 ),
                                             ],
-                                            style={
-                                                "background-color": mainColor,
-                                                "font-family": "Roboto",
-                                                "font-weight": "500",
-                                                "font-size": "1.2rem",
-                                            },
+                                            title="Worst Performing Subject",
+                                        ),
+                                        dbc.AccordionItem(
+                                            "tite",
+                                            title="Recommendation",
                                         ),
                                     ],
-                                ),
+                                    style={
+                                        "font-family": "Roboto",
+                                    },
+                                )
                             ],
                         ),
                     ],
