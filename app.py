@@ -214,14 +214,15 @@ app.layout = html.Div(
                                         dmc.AccordionItem(
                                             [
                                                 dmc.AccordionControl(
-                                                    "Best Performing Subject"
+                                                    "Best Performing Subject",
+                                                    icon=DashIconify(icon="bi:award"),
                                                 ),
                                                 dmc.AccordionPanel(
                                                     "Subject: "
                                                     + subjectPerformance["bestSubject"]
                                                 ),
                                                 dmc.AccordionPanel(
-                                                    "Subject: "
+                                                    "Grades: "
                                                     + str(
                                                         subjectPerformance[
                                                             "bestSubjectGrade"
@@ -234,14 +235,15 @@ app.layout = html.Div(
                                         dmc.AccordionItem(
                                             [
                                                 dmc.AccordionControl(
-                                                    "Worst Performing Subject"
+                                                    "Worst Performing Subject",
+                                                    icon=DashIconify(icon="bi:fire"),
                                                 ),
                                                 dmc.AccordionPanel(
                                                     "Subject: "
                                                     + subjectPerformance["worstSubject"]
                                                 ),
                                                 dmc.AccordionPanel(
-                                                    "Subject: "
+                                                    "Grades: "
                                                     + str(
                                                         subjectPerformance[
                                                             "worstSubjectGrade"
@@ -253,7 +255,12 @@ app.layout = html.Div(
                                         ),
                                         dmc.AccordionItem(
                                             [
-                                                dmc.AccordionControl("Reccomendation"),
+                                                dmc.AccordionControl(
+                                                    "Reccomendation",
+                                                    icon=DashIconify(
+                                                        icon="bi:lightbulb"
+                                                    ),
+                                                ),
                                                 dmc.AccordionPanel("Reccomended"),
                                             ],
                                             value="recommendation",
