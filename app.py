@@ -38,7 +38,6 @@ app = Dash(
 # Datasets
 studentData = pd.read_csv("studentData.csv")
 studentData.index = np.arange(1, len(studentData) + 1)
-print(studentData.loc[studentData.max()])
 
 # Visualization
 studentPerformanceGraph = px.bar(
@@ -48,7 +47,7 @@ studentPerformanceGraph = px.bar(
     orientation="h",
 )
 studentPerformanceGraph.update_layout(
-    margin=dict(l=20, r=20, t=5, b=20),
+    margin=dict(l=20, r=20, t=20, b=20),
 )
 
 
@@ -158,14 +157,14 @@ app.layout = html.Div(
         # Dashboard Content
         # Grid
         html.Div(
-            className="container",
+            className="container-fluid",
             children=[
                 # Headers
                 html.Div(
-                    className="row mt-5 justify-content-md-center",
+                    className="row mt-5 mx-5 align-items-start justify-content-md-center ",
                     children=[
                         html.Div(
-                            className="col mx-5",
+                            className="col-md-6",
                             children=[
                                 html.Div(
                                     className="text-white p-2 text-center rounded mr-auto",
@@ -180,7 +179,7 @@ app.layout = html.Div(
                             ],
                         ),
                         html.Div(
-                            className="col mx-5",
+                            className="col-md-6 ms-md-auto",
                             children=[
                                 html.Div(
                                     className="text-white p-2 text-center rounded mr-auto",
@@ -198,10 +197,10 @@ app.layout = html.Div(
                 ),
                 # Content
                 html.Div(
-                    className="row  mt-3 justify-content-md-center",
+                    className="row mt-3 mx-5 justify-content-md-center",
                     children=[
                         html.Div(
-                            className="col mx-5",
+                            className="col-md-6",
                             children=[
                                 dcc.Graph(
                                     figure=studentPerformanceGraph,
@@ -209,7 +208,7 @@ app.layout = html.Div(
                             ],
                         ),
                         html.Div(
-                            className="col mx-5",
+                            className="col-md-6 ms-md-auto",
                             children=[
                                 html.Div(
                                     className="text-white p-2 rounded mr-auto",
@@ -219,7 +218,7 @@ app.layout = html.Div(
                                             children=[
                                                 html.H5("Best Subject:"),
                                                 html.P(
-                                                    children=[bestSubj["Subjects"]],
+                                                    studentData.max()["Subjects"],
                                                     style={"font-weight": "300"},
                                                 ),
                                             ],
@@ -253,6 +252,9 @@ app.layout = html.Div(
                             ],
                         ),
                     ],
+                ),
+                html.Div(
+                    className="row mt-3 mx-5 justify-content-md-center", children=[]
                 ),
             ],
         ),
