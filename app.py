@@ -212,7 +212,8 @@ app.layout = html.Div(
                                     className="text-white",
                                     children=[
                                         dmc.AccordionItem(
-                                            [
+                                            className="m-3",
+                                            children=[
                                                 dmc.AccordionControl(
                                                     "Best Performing Subject",
                                                     icon=DashIconify(icon="bi:award"),
@@ -233,7 +234,8 @@ app.layout = html.Div(
                                             value="bestPerformingSubject",
                                         ),
                                         dmc.AccordionItem(
-                                            [
+                                            className="m-3",
+                                            children=[
                                                 dmc.AccordionControl(
                                                     "Worst Performing Subject",
                                                     icon=DashIconify(icon="bi:fire"),
@@ -254,7 +256,8 @@ app.layout = html.Div(
                                             value="worstPerformingSubject",
                                         ),
                                         dmc.AccordionItem(
-                                            [
+                                            className="m-3",
+                                            children=[
                                                 dmc.AccordionControl(
                                                     "Reccomendation",
                                                     icon=DashIconify(
@@ -276,6 +279,7 @@ app.layout = html.Div(
                                         "control": {
                                             "font-family": "Roboto",
                                             "font-weight": "500",
+                                            "font-size": ".8em",
                                         },
                                         "item": {
                                             "backgroundColor": dmc.theme.DEFAULT_COLORS[
@@ -284,7 +288,7 @@ app.layout = html.Div(
                                             "border": "1px solid transparent",
                                             "font-family": "Roboto",
                                             "font-weight": "300",
-                                            "font-size": "1em",
+                                            "font-size": "1.5em",
                                             "position": "relative",
                                             "zIndex": 0,
                                             "transition": "transform 150ms ease",
