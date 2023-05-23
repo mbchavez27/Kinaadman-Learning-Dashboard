@@ -70,7 +70,7 @@ app.layout = html.Div(
     children=[
         # Navigation Bar
         html.Nav(
-            className="navbar bg-body-tertiary rounded-bottom p-4",
+            className="navbar shadow bg-body-tertiary rounded-bottom p-4",
             style={"background-color": mainColor},
             children=[
                 html.Div(
@@ -99,13 +99,11 @@ app.layout = html.Div(
                                 html.Span(
                                     className="px-3 d-flex align-items-center",
                                     children=[
-                                        html.Img(
-                                            className="px-3",
-                                            src="assets/user.svg",
-                                            style={
-                                                "height": "2.5em",
-                                                "filter": "brightness(0) invert(1)",
-                                            },
+                                        DashIconify(
+                                            className="mx-2",
+                                            icon="material-symbols:account-circle",
+                                            width=50,
+                                            height=50,
                                         ),
                                         dmc.Menu(
                                             [
@@ -114,7 +112,7 @@ app.layout = html.Div(
                                                         "Student #1",
                                                         style={
                                                             "background-color": "rgba(0, 0, 0, 0)",
-                                                            "border": "2px solid white",
+                                                            "border": "3px solid white",
                                                             "font-family": "Roboto",
                                                             "font-weight": "500",
                                                             "font-size": "1em",
@@ -165,7 +163,7 @@ app.layout = html.Div(
                             className="col-md-6",
                             children=[
                                 html.Div(
-                                    className="text-white p-2 text-center rounded mr-auto",
+                                    className="shadow-sm text-white p-2 text-center rounded mr-auto",
                                     children=["Student's Performance"],
                                     style={
                                         "background-color": mainColor,
@@ -180,7 +178,7 @@ app.layout = html.Div(
                             className="col-md-6 ms-md-auto",
                             children=[
                                 html.Div(
-                                    className="text-white p-2 text-center rounded mr-auto",
+                                    className="shadow-sm text-white p-2 text-center rounded mr-auto",
                                     children=["Analysis"],
                                     style={
                                         "background-color": mainColor,
@@ -212,7 +210,7 @@ app.layout = html.Div(
                                     className="text-white",
                                     children=[
                                         dmc.AccordionItem(
-                                            className="m-3",
+                                            className="shadow-sm m-3",
                                             children=[
                                                 dmc.AccordionControl(
                                                     "Best Performing Subject",
@@ -234,7 +232,7 @@ app.layout = html.Div(
                                             value="bestPerformingSubject",
                                         ),
                                         dmc.AccordionItem(
-                                            className="m-3",
+                                            className="shadow-sm m-3",
                                             children=[
                                                 dmc.AccordionControl(
                                                     "Worst Performing Subject",
@@ -256,15 +254,15 @@ app.layout = html.Div(
                                             value="worstPerformingSubject",
                                         ),
                                         dmc.AccordionItem(
-                                            className="m-3",
+                                            className="shadow-sm m-3",
                                             children=[
                                                 dmc.AccordionControl(
-                                                    "Reccomendation",
+                                                    "Recommendation",
                                                     icon=DashIconify(
                                                         icon="bi:lightbulb"
                                                     ),
                                                 ),
-                                                dmc.AccordionPanel("Reccomended"),
+                                                dmc.AccordionPanel("Recommended"),
                                             ],
                                             value="recommendation",
                                         ),
