@@ -30,13 +30,6 @@ external_stylesheets = [
 # Designs
 mainColor = "#5b8dde"
 
-# App Information
-app = Dash(
-    __name__,
-    external_stylesheets=external_stylesheets,
-    title="Kinaadman Learning Dashboard",
-)
-
 # Datasets
 studentData = pd.read_csv("studentData.csv")
 studentData = studentData.set_index("Subjects")
@@ -52,6 +45,7 @@ studentPerformanceGraph = px.bar(
         "index": "Subjects",
     },
     orientation="h",
+    color="Performance",
 )
 studentPerformanceGraph.update_layout(
     legend_bgcolor=mainColor,
@@ -65,260 +59,15 @@ subjectPerformance = {
 }
 
 
-# Dash Design
-app.layout = html.Div(
-    children=[
-        # Navigation Bar
-        html.Nav(
-            className="navbar shadow bg-body-tertiary rounded-bottom p-4",
-            style={"background-color": mainColor},
-            children=[
-                html.Div(
-                    className="container-fluid",
-                    children=[
-                        # Title Text with Logo <- Left Side
-                        html.Span(
-                            className="navbar-brand mb-0 h1 text-white",
-                            style={
-                                "font-family": "Roboto",
-                                "font-weight": "500",
-                                "font-size": "1.5rem",
-                            },
-                            children=["Kinaadman Learning Dashboard"],
-                        ),
-                        # Account Details <- Right Side
-                        html.Div(
-                            className="d-flex align-items-center text-white",
-                            style={
-                                "font-family": "Roboto",
-                                "font-weight": "500",
-                                "font-size": "1em",
-                            },
-                            # Student #
-                            children=[
-                                html.Span(
-                                    className="px-3 d-flex align-items-center",
-                                    children=[
-                                        DashIconify(
-                                            className="mx-2",
-                                            icon="material-symbols:account-circle",
-                                            width=50,
-                                            height=50,
-                                        ),
-                                        dmc.Menu(
-                                            [
-                                                dmc.MenuTarget(
-                                                    dmc.Button(
-                                                        "Student #1",
-                                                        style={
-                                                            "background-color": "rgba(0, 0, 0, 0)",
-                                                            "border": "3px solid white",
-                                                            "font-family": "Roboto",
-                                                            "font-weight": "500",
-                                                            "font-size": "1em",
-                                                        },
-                                                    ),
-                                                ),
-                                                dmc.MenuDropdown(
-                                                    [
-                                                        dmc.MenuLabel("Account"),
-                                                        dmc.MenuItem(
-                                                            "Log-Out",
-                                                            href="https://www.github.com/snehilvj",
-                                                            icon=DashIconify(
-                                                                icon="tabler:settings"
-                                                            ),
-                                                            style={
-                                                                "font-family": "Roboto",
-                                                                "font-weight": "300",
-                                                                "font-size": "1em",
-                                                            },
-                                                        ),
-                                                    ]
-                                                ),
-                                            ],
-                                            trigger="hover",
-                                        ),
-                                    ],
-                                    style={
-                                        "font-size": "1em",
-                                    },
-                                ),
-                            ],
-                        ),
-                    ],
-                )
-            ],
-        ),
-        # Dashboard Content
-        # Grid
-        html.Div(
-            className="container-fluid",
-            children=[
-                # Headers
-                html.Div(
-                    className="row mt-5 mx-5 align-items-start justify-content-md-center ",
-                    children=[
-                        html.Div(
-                            className="col-md-6",
-                            children=[
-                                html.Div(
-                                    className="shadow-sm text-white p-2 text-center rounded mr-auto",
-                                    children=["Student's Performance"],
-                                    style={
-                                        "background-color": mainColor,
-                                        "font-family": "Roboto",
-                                        "font-weight": "500",
-                                        "font-size": "2em",
-                                    },
-                                ),
-                            ],
-                        ),
-                        html.Div(
-                            className="col-md-6 ms-md-auto",
-                            children=[
-                                html.Div(
-                                    className="shadow-sm text-white p-2 text-center rounded mr-auto",
-                                    children=["Analysis"],
-                                    style={
-                                        "background-color": mainColor,
-                                        "font-family": "Roboto",
-                                        "font-weight": "500",
-                                        "font-size": "2em",
-                                    },
-                                ),
-                            ],
-                        ),
-                    ],
-                ),
-                # Content
-                html.Div(
-                    className="row mt-3 mx-5 justify-content-md-center",
-                    children=[
-                        html.Div(
-                            className="col-md-6",
-                            children=[
-                                dcc.Graph(
-                                    figure=studentPerformanceGraph,
-                                ),
-                            ],
-                        ),
-                        html.Div(
-                            className="col-md-6 ms-md-auto",
-                            children=[
-                                dmc.Accordion(
-                                    className="text-white",
-                                    children=[
-                                        dmc.AccordionItem(
-                                            className="shadow-sm m-3",
-                                            children=[
-                                                dmc.AccordionControl(
-                                                    "Best Performing Subject",
-                                                    icon=DashIconify(icon="bi:award"),
-                                                ),
-                                                dmc.AccordionPanel(
-                                                    "Subject: "
-                                                    + subjectPerformance["bestSubject"]
-                                                ),
-                                                dmc.AccordionPanel(
-                                                    "Grades: "
-                                                    + str(
-                                                        subjectPerformance[
-                                                            "bestSubjectGrade"
-                                                        ]
-                                                    )
-                                                ),
-                                            ],
-                                            value="bestPerformingSubject",
-                                        ),
-                                        dmc.AccordionItem(
-                                            className="shadow-sm m-3",
-                                            children=[
-                                                dmc.AccordionControl(
-                                                    "Worst Performing Subject",
-                                                    icon=DashIconify(icon="bi:fire"),
-                                                ),
-                                                dmc.AccordionPanel(
-                                                    "Subject: "
-                                                    + subjectPerformance["worstSubject"]
-                                                ),
-                                                dmc.AccordionPanel(
-                                                    "Grades: "
-                                                    + str(
-                                                        subjectPerformance[
-                                                            "worstSubjectGrade"
-                                                        ]
-                                                    )
-                                                ),
-                                            ],
-                                            value="worstPerformingSubject",
-                                        ),
-                                        dmc.AccordionItem(
-                                            className="shadow-sm m-3",
-                                            children=[
-                                                dmc.AccordionControl(
-                                                    "Recommendation",
-                                                    icon=DashIconify(
-                                                        icon="bi:lightbulb"
-                                                    ),
-                                                ),
-                                                dmc.AccordionPanel("Recommended"),
-                                            ],
-                                            value="recommendation",
-                                        ),
-                                    ],
-                                    styles={
-                                        "root": {
-                                            "backgroundColor": dmc.theme.DEFAULT_COLORS[
-                                                "gray"
-                                            ][0],
-                                            "borderRadius": 5,
-                                        },
-                                        "control": {
-                                            "font-family": "Roboto",
-                                            "font-weight": "500",
-                                            "font-size": ".8em",
-                                        },
-                                        "item": {
-                                            "backgroundColor": dmc.theme.DEFAULT_COLORS[
-                                                "gray"
-                                            ][0],
-                                            "border": "1px solid transparent",
-                                            "font-family": "Roboto",
-                                            "font-weight": "300",
-                                            "font-size": "1.5em",
-                                            "position": "relative",
-                                            "zIndex": 0,
-                                            "transition": "transform 150ms ease",
-                                            "&[data-active]": {
-                                                "transform": "scale(1.03)",
-                                                "backgroundColor": "white",
-                                                "boxShadow": 5,
-                                                "borderColor": dmc.theme.DEFAULT_COLORS[
-                                                    "gray"
-                                                ][2],
-                                                "borderRadius": 5,
-                                                "zIndex": 1,
-                                            },
-                                        },
-                                        "chevron": {
-                                            "&[data-rotate]": {
-                                                "transform": "rotate(-90deg)",
-                                            },
-                                        },
-                                    },
-                                )
-                            ],
-                        ),
-                    ],
-                ),
-                html.Div(
-                    className="row mt-3 mx-5 justify-content-md-center", children=[]
-                ),
-            ],
-        ),
-    ],
+# Dash App
+app = Dash(
+    __name__,
+    external_stylesheets=external_stylesheets,
+    title="Kinaadman Learning Dashboard",
+    meta_tags=[{"name": "viewport", "content": "width=device-width"}],
+    suppress_callback_exceptions=True,
 )
+
 
 if __name__ == "__main__":
     app.run_server(debug=True)
