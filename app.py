@@ -45,7 +45,6 @@ studentPerformanceGraph = px.bar(
         "index": "Subjects",
     },
     orientation="h",
-    color="Performance",
 )
 studentPerformanceGraph.update_layout(
     legend_bgcolor=mainColor,

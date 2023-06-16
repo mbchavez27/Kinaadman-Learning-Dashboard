@@ -150,6 +150,18 @@ def navBar():
                                                                 "font-size": "1em",
                                                             },
                                                         ),
+                                                        dmc.MenuItem(
+                                                            "Log Out Student",
+                                                            href="/logOutStudent",
+                                                            icon=DashIconify(
+                                                                icon="material-symbols:account-circle-outline"
+                                                            ),
+                                                            style={
+                                                                "font-family": "Roboto",
+                                                                "font-weight": "300",
+                                                                "font-size": "1em",
+                                                            },
+                                                        ),
                                                     ]
                                                 ),
                                             ],
