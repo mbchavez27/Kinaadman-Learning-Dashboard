@@ -52,6 +52,7 @@ currentStudentInfo = {
     ],
 }
 
+
 studentDatas = {"studentData": pd.read_csv(currentStudentInfo["currentStudentData"])}
 studentDatas["studentData"] = studentDatas["studentData"].set_index("Subjects")
 subjects = studentDatas["studentData"].index.values
@@ -89,7 +90,7 @@ studentPerformanceGraph.update_layout(
     {
         "plot_bgcolor": "rgba(0,0,0,0)",
         "paper_bgcolor": "rgb(248, 248, 249)",
-        "xaxis_range": [0, 100],
+        "xaxis_range": [70, 100],
     }
 )
 # studentPerformanceGraph.update_traces(marker_color=studentDatas["studentData"]["Color"])
@@ -1252,7 +1253,7 @@ def generateDashboardLayout():
         {
             "plot_bgcolor": "rgba(0,0,0,0)",
             "paper_bgcolor": "rgb(248, 248, 249)",
-            "xaxis_range": [0, 100],
+            "xaxis_range": [70, 100],
         }
     )
     # studentPerformanceGraph.update_traces(marker_color=studentDatas["studentData"]["Color"])
