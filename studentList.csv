@@ -1,4 +1,5 @@
-,Student_Email,Student_Password,Student_Names,Strand,Section,Student_Data
-0,jbvaldez3@student.apc.edu.ph,jasper,Jasper Valdez,STEM,STEM213,studentData_jasper.csv
-1,sacamama@student.apc.edu.ph,shan,Shanteiy Camaama,STEM,STEM212,studentData_shan.csv
-2,mbchavez2@student.apc.edu.ph,max,Max Benedict Chavez,STEM,STEM211,studentData_max.csv
+,Student_Email,Student_Password,Student_Names,Strand,Section,Term,Student_Data
+0,jbvaldez3@student.apc.edu.ph,jasper,Jasper Valdez,STEM,STEM213,2,studentData_jasper.csv
+1,sacamama@student.apc.edu.ph,shan,Shanteiy Camaama,STEM,STEM212,2,studentData_shan.csv
+2,mbchavez2@student.apc.edu.ph,max,Max Benedict Chavez,STEM,STEM211,2,studentData_max.csv
+3,jbbravo2@student.apc.edu.ph,jwaine,Jwaine Ralph Bravo,STEM,STEM214,2,studentData_jwaine.csv

@@ -1313,6 +1313,13 @@ def generateDashboardLayout():
                                                     ],
                                                     "Section",
                                                 ],
+                                                " - Term #",
+                                                studentList.loc[
+                                                    currentStudent_dict[
+                                                        "current_student"
+                                                    ],
+                                                    "Term",
+                                                ],
                                             ],
                                             style={
                                                 "font-family": "Roboto",
@@ -2128,4 +2135,4 @@ def display_page(pathname):
 
 # Run the app on localhost:8050
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server(debug=False)
